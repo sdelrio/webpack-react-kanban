@@ -1,13 +1,18 @@
 import React from 'react';
 import uuid from 'node-uuid';
+
 import Notes from './Notes';
-import findIndex from '../libs/find_index';
+import NoteActions from '../actions/NoteActions';
+import NoteStore from '../stores/NoteStore';
 
 export default class App extends React.Component {
 
     constructor(props) {
         super(props);
 
+        this.storeChanged   = this.storeChanged.bind(this);
+        this.state          = NoteStore.getState();
+/*
         this.state = {
             notes: [
                    {
@@ -27,6 +32,22 @@ export default class App extends React.Component {
 
         this.addItem = this.addItem.bind(this);
         this.itemEdited = this.itemEdited.bind(this);
+*/
+    }
+
+    componentDidMount() {
+        NoteStore.listen(this.storeChanged);
+  
+    }
+
+    componentWillUnmount() {
+        NoteStore.unlisten(this.storeChanged);
+  
+    }
+
+    storeChanged(state) {
+        this.setState(state);
+  
     }
 
     render() {
@@ -48,32 +69,23 @@ export default class App extends React.Component {
     }
 
     addItem() {
-        console.log('add item');
+        console.log('add new task item');
 
-        this.setState({
-            notes: this.state.notes.concat([{
-                id: uuid.v4(),
-                task: 'New task'
-            }])
-        });
+        NoteActions.create({id: uuid.v4(), task: 'New task'});
     }
 
-    itemEdited(noteId, task) {
+    itemEdited(id, task) {
 
-        let notes = this.state.notes;
+        if(task) {      /* If task not empty update content */
 
-        const noteIndex = findIndex(notes, 'id', noteId);
+          console.log('edit item ' + id + ' task:' + task);
+          NoteActions.update({id, task});
 
-        if(noteIndex < 0) {
-            return console.warn('Failed to find note', notes, noteId);
+        } else {        /* If task empty delete note */
+
+          console.log('delete item ' + id);
+          NoteActions.delete(id);
         }
 
-        if (task) {
-            notes[noteIndex].task = task;
-        } else {
-            notes = notes.slice(0, noteIndex).concat(notes.slice(noteIndex + 1));
-        }
-
-        this.setState({notes});
     }
 }

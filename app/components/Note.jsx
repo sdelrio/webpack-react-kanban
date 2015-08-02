@@ -25,7 +25,6 @@ export default class Note extends React.Component {
         </div>;
     }
 
-
     renderEdit() {
         return <input type='text' 
                 defaultValue={this.props.value} 
