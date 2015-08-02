@@ -1,6 +1,6 @@
 import React from 'react';
 import uuid from 'node-uuid';
-import Note from './Note';
+import Notes from './Notes';
 
 export default class App extends React.Component {
     render() {
@@ -22,24 +22,15 @@ export default class App extends React.Component {
             }
         ];
 
-        /* What render will do? for each item in array notes will call renderNote */
+        /* Call componet Notes for render */
 
         return (
-            <div>
-                <ul>
-                    {notes.map(this.renderNote)}
-                </ul>
-            </div>
+
+              <div>
+                <Notes items={notes} />
+              </div>
+
                );
     }
 
-    /* Draw a LI item with key=uuid and call Note component for task name */
-
-    renderNote(note) {
-        return (
-            <li key={`note${note.id}`}>
-               <Note value={note.task}/> 
-            </li>
-               )
-    }
 }
