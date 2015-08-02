@@ -12,35 +12,35 @@ export default class App extends React.Component {
 
         this.storeChanged   = this.storeChanged.bind(this);
         this.state          = NoteStore.getState();
-/*
-        this.state = {
-            notes: [
-                   {
-                      id: uuid.v4(),
-                      task: 'Learn webpack'
-                   },
-                   {
-                      id: uuid.v4(),
-                      task: 'Learn React'
-                   },
-                   {
-                      id: uuid.v4(),
-                      task: 'Do laundry'
-                   }
-            ]
-        };
+    }
 
-        this.addItem = this.addItem.bind(this);
-        this.itemEdited = this.itemEdited.bind(this);
+    componentWillMount() { 
+
+    /* Gets triggered once before any rendering. One way to use it would be 
+     * to load data asynchronously there and force rendering through setState */
+/*
+        NoteActions.create({id: uuid.v4(), task: 'Learn webpack'});
+        NoteActions.create({id: uuid.v4(), task: 'Learn React'});
+        NoteActions.create({id: uuid.v4(), task: 'Do laundry'});
+
+        this.state = NoteStore.getState();
 */
     }
 
-    componentDidMount() {
+    componentDidMount() { 
+
+    /* gets triggered after initial rendering. You have access to DOM here. 
+     * You could use this hook to wrap a jQuery plugin within a component for instance. */
+
         NoteStore.listen(this.storeChanged);
   
     }
 
     componentWillUnmount() {
+
+    /* gets triggered once before any rendering. One way to use it would be to 
+     * load data asynchronously there and force rendering through setState */
+
         NoteStore.unlisten(this.storeChanged);
   
     }
