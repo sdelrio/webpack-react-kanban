@@ -22,7 +22,7 @@ class NoteStore {
         const notes = this.notes;
 
 
-        this.setState({                 /* Set state griggers render view */
+        this.setState({                 /* Set state triggers render view */
             notes: notes.concat(note)   /* Concatenate note to notes state */
         });
   
@@ -37,7 +37,7 @@ class NoteStore {
 
         notes[targetId].task = note.task;  /* update note task with index targetId */
 
-                                    /* Set state griggers render view */
+                                    /* Set state triggers render view */
         this.setState({notes});     /* Modify notes and pass to notes listerners on the view */
   
     }
@@ -49,7 +49,7 @@ class NoteStore {
         const notes = this.notes;
         const targetId = findIndex(notes, 'id', id);
 
-        this.setState({             /* Set state griggers render view */
+        this.setState({             /* Set state triggers render view */
           notes: notes.slice(0, targetId).concat(notes.slice(targetId + 1))
         });
 
